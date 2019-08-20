@@ -5,6 +5,7 @@ import java.util.*;
 /**
  * 676. Implement Magic Dictionary
  * Medium
+ * Related: Implement Trie (Prefix Tree) ; Longest Word in Dictionary
  * Implement a magic directory with buildDict, and search methods.
  * For the method buildDict, you'll be given a list of non-repetitive words to build a dictionary.
  * For the method search, you'll be given a word, and judge whether if you modify exactly one character into another character in this word,
