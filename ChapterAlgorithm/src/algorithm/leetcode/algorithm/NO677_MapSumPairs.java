@@ -3,6 +3,7 @@ package algorithm.leetcode.algorithm;
 /**
  * 677. Map Sum Pairs
  * Medium
+ * Related::Word Squares ; Concatenated Words ; Index Pairs of a String
  * Implement a MapSum class with insert, and sum methods.
  * For the method insert, you'll be given a pair of (string, integer). The string represents the key and the integer represents the value.
  * If the key already existed, then the original key-value pair will be overridden to the new one.
