@@ -101,4 +101,23 @@ public class NO98_ValidateBinarySearchTree {
         }
         return isValidBSTHelper(root.left,min,root.val) && isValidBSTHelper(root.right,root.val,max);
     }
+
+    //方法4：记录上一个访问的节点
+    public static TreeNode pre = null;
+    public boolean isValidBST4(TreeNode root) {
+        pre = null;
+        return dfs(root);
+    }
+
+    public boolean dfs(TreeNode root){
+	    if(root == null)return true;
+	    boolean result = true;
+	    result &= dfs(root.right);
+	    if(pre != null && pre.val < root.val){
+	        return false;
+        }
+	    pre = root;
+	    result &= dfs(root.left);
+	    return result;
+    }
 }

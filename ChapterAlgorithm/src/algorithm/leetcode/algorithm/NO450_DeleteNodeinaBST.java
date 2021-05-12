@@ -126,4 +126,48 @@ public class NO450_DeleteNodeinaBST {
         }
         return root;
     }
+
+    public TreeNode deleteNode3(TreeNode root, int key) {
+	    //cur为被找出被删除的节点
+        //pre为cur的父节点
+	    TreeNode cur = root;
+	    TreeNode pre = null;
+        while(cur != null && cur.val != key){
+            pre = cur;
+            if(cur.val > key){
+                cur = cur.left;
+            }else{
+                cur = cur.right;
+            }
+        }
+        if(pre == null) {
+            return deleteRootNode2(cur);
+        }else if(pre.left == cur){
+            pre.left = deleteRootNode2(cur);
+        }else if(pre.right == cur){
+            pre.right = deleteRootNode2(cur);
+        }
+        return root;
+    }
+
+    public TreeNode deleteRootNode2(TreeNode root){
+        if(root == null)return null;
+        if(root.left == null)return root.right;
+        if(root.right == null)return root.left;
+        //cur为替代root的子节点
+        //pre为cur的原父节点
+        TreeNode cur = root.right;
+        TreeNode pre = null;
+        while(cur.left != null){
+            pre = cur;
+            cur = cur.left;
+        }
+        cur.left = root.left;
+        //避免cur就是root的右子节点的情况
+        if(root.right != cur){
+            pre.left = cur.right;
+            cur.right = root.right;
+        }
+        return cur;
+    }
 }
