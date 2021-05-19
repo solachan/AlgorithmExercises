@@ -30,9 +30,9 @@ public class NO410_SplitArrayLargestSum {
 	// 方法1：
 	// 二分搜索，在[max,sum]中二分搜索
 	// 以low = max，high = sum为初始边界，mid为中点，
-	// 查看mid是否能将数组分成大于等于m组的连续子数组，且子数组的和小于mid
-	// 如果可以，则说明mid太大，可以将mid缩小，即，将上界缩小，high = mid -1;
-	// 如果不可以，则说明mid太小，可以将mid扩大，即，将下界扩大，low = mid + 1;
+	// 查看mid是否能将数组分成大于等于m组的连续子数组，且子数组的和小于等于mid
+	// 如果可以，则说明mid太小，可以将mid扩大，即，将下界扩大，low = mid + 1;
+	// 如果不可以，则说明mid太大，可以将mid缩小，即，将上界缩小，high = mid -1;
 	// 直到low > high，最后返回low
 	public int splitArray(int[] nums, int m) {
 		long sum = 0;
@@ -111,5 +111,53 @@ public class NO410_SplitArrayLargestSum {
 			}
 		}
 		return dp[0];
+	}
+
+	public int splitArray3(int[] nums, int m) {
+		//搜索空间[left,right)，左闭右开
+		int left = getMax(nums),right = getSum(nums) + 1;
+		while(left < right){
+			int mid = left + (right - left)/2;
+			if(split(nums,m,mid)){
+				right = mid;
+			}else {
+				left = mid + 1;
+			}
+		}
+		return left;
+	}
+
+	private boolean split(int[] nums, int m, int max) {
+		int count = 0;
+		int sum = 0;
+		for(int num : nums){
+			if(sum + num > max){
+				count++;
+				sum = num;
+				if(count > m){
+					return false;
+				}
+			}else {
+				sum += num;
+			}
+		}
+		if(sum > 0)count++;
+		return count <= m;
+	}
+
+	private int getSum(int[] nums) {
+		int sum = 0;
+		for(int num : nums){
+			sum+=num;
+		}
+		return sum;
+	}
+
+	private int getMax(int[] nums) {
+		int max = 0;
+		for(int num : nums){
+			max = Math.max(max,num);
+		}
+		return max;
 	}
 }
