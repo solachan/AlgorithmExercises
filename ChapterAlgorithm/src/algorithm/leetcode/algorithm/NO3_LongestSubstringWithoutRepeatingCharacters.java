@@ -69,4 +69,24 @@ public class NO3_LongestSubstringWithoutRepeatingCharacters {
 	        }
 	        return max;
 	    }
+
+	    //滑动窗口法
+        public static int lengthOfLongestSubstring3(String s) {
+            if (s.length()==0) return 0;
+            int[] count = new int[256];
+            int max=0;
+            int left = 0,right = 0;
+            while(right < s.length()){
+                char c = s.charAt(right);
+                right++;
+                count[c]++;
+                while(count[c] > 1){
+                    char d = s.charAt(left);
+                    left++;
+                    count[d]--;
+                }
+                max = Math.max(max,right-left);
+            }
+            return max;
+        }
 }
