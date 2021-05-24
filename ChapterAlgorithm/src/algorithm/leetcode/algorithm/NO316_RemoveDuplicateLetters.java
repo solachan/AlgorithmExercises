@@ -54,7 +54,7 @@ public class NO316_RemoveDuplicateLetters {
         for(int i = 0 ; i < s.length() ; i++){
             char c = s.charAt(i);
             count[c-'a']--;
-            if(visited[c-'a'] == true){
+            if(visited[c - 'a']){
                 continue;
             }
             while(!stack.isEmpty() && c < stack.peek() && count[stack.peek()-'a'] > 0){
@@ -68,5 +68,41 @@ public class NO316_RemoveDuplicateLetters {
             result.insert(0,stack.pop());
         }
         return result.toString();
+    }
+
+    public static String removeDuplicateLetters3(String s) {
+	    if(s == null || s.length() == 0){
+	        return null;
+        }
+	    int[] count = new int[26];
+	    boolean[] visited = new boolean[26];
+	    for(char c : s.toCharArray()){
+	        count[c-'a']++;
+	        visited[c-'a'] = false;
+        }
+	    Stack<Character> stack = new Stack<>();
+	    for(int i = 0 ; i < s.length() ; i++){
+	        char c = s.charAt(i);
+	        count[c-'a']--;
+	        if(visited[c-'a']){
+	            continue;
+            }
+	        while(!stack.isEmpty() && stack.peek() > c && count[stack.peek()-'a'] > 0){
+	            visited[stack.pop()-'a'] = false;
+            }
+	        stack.push(c);
+	        visited[c-'a'] = true;
+        }
+	    StringBuilder sb = new StringBuilder();
+	    while (!stack.isEmpty()){
+	        sb.insert(0,stack.pop());
+        }
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        String s = "bcabc";
+        String result = removeDuplicateLetters3(s);
+        System.out.println(result);
     }
 }
