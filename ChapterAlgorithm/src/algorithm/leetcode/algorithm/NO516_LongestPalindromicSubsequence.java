@@ -71,4 +71,27 @@ public class NO516_LongestPalindromicSubsequence {
         dp[start][end] = result;
         return result;
     }
+
+    //动态规划
+    public static int longestPalindromeSubseq3(String s) {
+	    int[][] dp = new int[s.length()+1][s.length()+1];
+	    for(int i = 1 ; i <= s.length() ; i++){
+	        dp[i][i] = 1;
+        }
+	    for(int i = s.length() ; i > 0 ; i--){
+	        for(int j = i+1 ; j <= s.length() ; j++){
+	            if(s.charAt(i-1) == s.charAt(j-1)){
+                    dp[i][j] = 2 + dp[i+1][j-1];
+                }else {
+                    dp[i][j] = Math.max(dp[i][j-1],dp[i+1][j]);
+                }
+            }
+        }
+	    return dp[1][s.length()];
+    }
+
+    public static void main(String[] args) {
+        String s = "a";
+        System.out.println(longestPalindromeSubseq3(s));
+    }
 }

@@ -50,4 +50,40 @@ public class NO53_MaximumSubarray {
 	    return max;
 	}
 
+	//动态规划，时间复杂度O(n),空间复杂度O(n)
+	public static int maxSubArray3(int[] array){
+		if(array == null || array.length == 0){
+			return 0;
+		}
+		int[] dp = new int[array.length];
+		dp[0] = array[0];
+		int max = dp[0];
+		for(int i = 1 ; i < dp.length ; i++){
+			dp[i] = Math.max(array[i],dp[i-1] + array[i]);
+			max = Math.max(max,dp[i]);
+		}
+		return max;
+	}
+
+	//动态规划(空间压缩)，时间复杂度O(n),空间复杂度O(1)
+	public static int maxSubArray4(int[] nums){
+		if(nums == null || nums.length == 0){
+			return 0;
+		}
+		int dp0 = nums[0];
+		int dp1;
+		int max = dp0;
+		for(int i = 1 ; i < nums.length ; i++){
+			dp1 = Math.max(nums[i],dp0 + nums[i]);
+			max = Math.max(max,dp1);
+			dp0 = dp1;
+		}
+		return max;
+	}
+
+	public static void main(String[] args) {
+		int[] nums = new int[]{5,4,-1,7,8};
+		System.out.println(maxSubArray4(nums));
+	}
+
 }

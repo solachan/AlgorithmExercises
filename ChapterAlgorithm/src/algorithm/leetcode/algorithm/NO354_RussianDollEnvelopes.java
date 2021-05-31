@@ -83,4 +83,33 @@ public class NO354_RussianDollEnvelopes {
         }
         return len;
     }
+
+    public int maxEnvelopes3(int[][] envelopes) {
+        if(envelopes == null || envelopes.length == 0){
+            return 0;
+        }
+        //对于宽度 w 相同的数对，要对其高度 h 进行降序排序。因为两个宽度相同的信封不能相互包含的，逆序排序保证在 w 相同的数对中最多只选取一个。
+        Arrays.sort(envelopes, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] == o2[0] ? o2[1] - o1[1] : o1[0] - o2[0];
+            }
+        });
+        int[] dp = new int[envelopes.length];
+        int length = 0;
+        for(int i = 0 ; i < envelopes.length ; i++){
+            int left = 0, right = length;
+            while(left < right){
+                int mid = (left + right)/2;
+                if(envelopes[i][1] <= dp[mid]){
+                    right = mid;
+                }else {
+                    left = mid+1;
+                }
+            }
+            if(left == length)length++;
+            dp[left] = envelopes[i][1];
+        }
+        return length;
+    }
 }
