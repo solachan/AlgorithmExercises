@@ -1,6 +1,7 @@
 package algorithm.leetcode.algorithm;
 /*
  * hard
+ * 45. Jump Game II
  *  Given an array of non-negative integers, you are initially positioned at the first index of the array.
 
 Each element in the array represents your maximum jump length at that position.
@@ -55,4 +56,20 @@ public class NO45_JumpGameII {
 	    }
 	    return sc;
 	}
+    //方法2：
+    //原理同上
+    public int jump3(int[] nums) {
+	    if(nums == null || nums.length <= 1)return 0;
+        int end = nums[0];
+        int last = end;
+        int count = 1;
+        for(int i = 1 ; i < nums.length-1 ; i++){
+            last = Math.max(last,i+nums[i]);
+            if(i == end){
+                count++;
+                end = last;
+            }
+        }
+        return count;
+    }
 }

@@ -69,4 +69,14 @@ public class NO55_JumpGame {
         }
         return max >= nums.length-1 ? true : false;
     }
+    //贪心算法
+    public static boolean canJump4(int[] nums) {
+	    int last = nums[0];
+	    for(int i = 1 ; i < nums.length ; i++){
+	        if(i <= last){
+	            last = Math.max(last,i+nums[i]);
+            } else break;
+        }
+	    return last >= nums.length-1;
+    }
 }

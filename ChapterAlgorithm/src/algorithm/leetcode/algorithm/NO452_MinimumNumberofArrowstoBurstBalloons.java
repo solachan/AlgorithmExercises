@@ -29,8 +29,10 @@ One way is to shoot one arrow for example at x = 6
 import java.util.*;
 public class NO452_MinimumNumberofArrowstoBurstBalloons {
 	public static void main(String[] args) {
-		int[][] points = new int[][]{{-2147483648,2147483647}};
-		System.out.println(findMinArrowShots(points));
+//		int[][] points = new int[][]{{-2147483648,2147483647}};
+//		System.out.println(findMinArrowShots(points));
+        int[][] points = new int[][]{{10,16},{2,8},{1,6},{7,12}};
+        System.out.println(findMinArrowShots3(points));
 	}
 	//方法1：
 	//sweep line算法，把点的头部坐标和尾部坐标分开，一起进行从小到大排序，
@@ -96,4 +98,18 @@ public class NO452_MinimumNumberofArrowstoBurstBalloons {
 		}
 		return minArrows;
 	}
+
+	//贪心算法
+    public static int findMinArrowShots3(int[][] points) {
+	    if(points == null || points.length == 0)return 0;
+        Arrays.sort(points,Comparator.comparing(point->point[1]));
+        int arrows = 1;
+        int end = points[0][1];
+        for(int i = 1 ; i < points.length ; i++){
+            if(points[i][0] <= end)continue;
+            end = points[i][1];
+            arrows++;
+        }
+        return arrows;
+    }
 }

@@ -88,4 +88,29 @@ public class NO435_Non_overlappingIntervals {
         }
         return intervals.length - count;
     }
+
+    //贪心算法
+    public static int eraseOverlapIntervals3(int[][] intervals) {
+	    if(intervals == null || intervals.length == 0)return 0;
+	    Arrays.sort(intervals, Comparator.comparingInt(o -> o[1]));
+	    int end = intervals[0][1];
+	    int count = 0;
+	    for(int i = 1 ; i < intervals.length ; i++){
+	        if(intervals[i][0] < end){
+                count++;
+                continue;
+            }
+            end = intervals[i][1];
+        }
+	    return count;
+    }
+
+    public static void main(String[] args) {
+        int[][] arrays = new int[][]{{1,2}, {2,3}, {3,4}, {1,3}};
+        Interval[] intervals = new Interval[arrays.length];
+        for(int i = 0 ; i < arrays.length ; i++){
+            intervals[i] = new Interval(arrays[i][0],arrays[i][1]);
+        }
+        System.out.println(eraseOverlapIntervals3(arrays));
+    }
 }
