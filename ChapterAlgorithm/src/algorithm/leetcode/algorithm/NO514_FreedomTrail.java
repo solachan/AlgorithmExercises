@@ -98,4 +98,32 @@ public class NO514_FreedomTrail {
         
         return dp[0][0] + m;
     }
+
+    //动态规划
+    public int findRotateSteps3(String ring, String key) {
+        int n = ring.length();
+        int m = key.length();
+        Map<Character,List<Integer>> pos = new HashMap<>();
+        for(int i = 0 ; i < ring.length() ; i++){
+            if(!pos.containsKey(ring.charAt(i))){
+                pos.put(ring.charAt(i),new ArrayList<>());
+            }
+            pos.get(ring.charAt(i)).add(i);
+        }
+        //dp[i][j] 表示 当圆盘指向ring[j]的时候，输入字符串key从下标i开始到结尾的字符串，即输入key[i,i+1,...,m],至少需要的操作次数
+        //dp[i][j] = Math.min(所有dp[i-1][字符key[j]的位置] + 需要操作的次数)
+        //那么dp[0][0]就是当圆盘指向ring[0]的时候，输入完整key字符串，即输入key[0,1,...,m],至少需要的操作次数，即最终所需要的结果
+        int[][] dp = new int[m + 1][n];
+        for(int i = m-1 ; i >= 0 ; i--){
+            for(int j = 0 ; j < n ; j++){
+                dp[i][j] = Integer.MAX_VALUE;
+                for (int k : pos.get(key.charAt(i))) {
+                    int diff = Math.abs(j - k);
+                    int step = Math.min(diff, n - diff)+1;
+                    dp[i][j] = Math.min(dp[i][j], step + dp[i + 1][k]);
+                }
+            }
+        }
+        return dp[0][0];
+    }
 }
