@@ -43,7 +43,7 @@ import java.util.Map;
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class NO04_11_PathSum {
+public class NO04_12_PathSum {
     public static void main(String[] args) {
         TreeNode root = TreeNode.getTree(1,2,null,3,null,4,null,5);
         int sum = 6;
