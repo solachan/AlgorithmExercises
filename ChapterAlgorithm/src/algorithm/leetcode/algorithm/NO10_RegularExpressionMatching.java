@@ -100,4 +100,36 @@ public class NO10_RegularExpressionMatching {
         }
         return c1 == c2;
     }
+
+    //动态规划
+    public static boolean isMatch3(String s, String p) {
+	    int m = s.length() , n = p.length();
+	    //dp[i][j] 表示s[0,i-1]与p[0,j-1]d
+	    boolean[][] dp = new boolean[m+1][n+1];
+	    dp[0][0] = true;
+	    for(int i = 0 ; i < n ; i++){
+	        if(p.charAt(i) == '*'){
+	            dp[0][i+1] = dp[0][i-1];
+            }
+        }
+
+	    for(int i = 1 ; i <= m ; i++){
+	        for(int j = 1 ; j <= n ; j++){
+	            if(s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '.'){
+	                //匹配单个字符
+	                dp[i][j] = dp[i-1][j-1];
+                }else if(p.charAt(j-1) == '*'){ //通配符
+                    if(s.charAt(i-1) != p.charAt(j-2) && p.charAt(j-2) != '.'){
+                        //匹配0个，不匹配
+                        dp[i][j] = dp[i][j-2];
+                    }else {
+                        dp[i][j] = dp[i - 1][j]   //匹配多个
+                                || dp[i][j - 1]   //匹配1个
+                                || dp[i][j - 2];  //匹配0个
+                    }
+                }
+            }
+        }
+        return dp[m][n];
+    }
 }
